@@ -28,6 +28,7 @@ from aiosmtplib.textutils import (
 
 MAX_LINE_LENGTH = 8192
 SMTP_PORT = 25
+SMTP_SSL_PORT = 465
 
 
 class SMTP:
@@ -43,11 +44,11 @@ class SMTP:
         ('login', auth_login,),
     )
 
-    def __init__(self, hostname='localhost', port=SMTP_PORT,
+    def __init__(self, hostname='localhost', port=None,
                  source_address=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT,
-                 loop=None):
+                 loop=None, ssl=False):
         self.hostname = hostname
-        self.port = port
+        self.port = SMTP_SSL_PORT if ssl else SMTP_PORT
         self._source_address = source_address
         # TODO: implement timeout
         self.timeout = timeout
@@ -64,6 +65,8 @@ class SMTP:
         self.transport = None
         self.loop = loop or asyncio.get_event_loop()
 
+        self.ssl = ssl
+
     async def connect(self):
         '''
         Open asyncio streams to the server and check response status.
@@ -74,7 +77,8 @@ class SMTP:
 
         try:
             self.transport, _ = await self.loop.create_connection(
-                lambda: self.protocol, self.hostname, self.port)
+                lambda: self.protocol, self.hostname, self.port,
+                ssl=self.ssl)
         except (ConnectionRefusedError, OSError):
             message = "Error connecting to {host} on port {port}".format(
                 host=self.hostname, port=self.port)
