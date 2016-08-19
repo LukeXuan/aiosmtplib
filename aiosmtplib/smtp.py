@@ -82,7 +82,7 @@ class SMTP:
         except (ConnectionRefusedError, OSError):
             message = "Error connecting to {host} on port {port}".format(
                 host=self.hostname, port=self.port)
-            raise SMTPConnectError(None, message)
+            raise SMTPConnectError(message)
         else:
             self.writer = SMTPStreamWriter(
                 self.transport, self.protocol, self.reader, self.loop)
