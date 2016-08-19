@@ -1,6 +1,7 @@
 import asyncio
 
 from .smtp import SMTP
+from .smtp_ssl import SMTP_SSL
 from .errors import (
     SMTPException, SMTPServerDisconnected, SMTPConnectError,
     SMTPRecipientsRefused, SMTPResponseException, SMTPNotSupported,
@@ -10,7 +11,8 @@ from .errors import (
 
 
 __all__ = (
-    'SMTP', 'SMTPException', 'SMTPServerDisconnected', 'SMTPConnectError',
+    'SMTP', 'SMTP_SSL',
+    'SMTPException', 'SMTPServerDisconnected', 'SMTPConnectError',
     'SMTPResponseException', 'SMTPNotSupported', 'SMTPHeloError',
     'SMTPDataError', 'SMTPAuthenticationError', 'SMTPSenderRefused',
     'SMTPRecipientRefused', 'SMTPRecipientsRefused',

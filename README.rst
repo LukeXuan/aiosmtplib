@@ -58,6 +58,11 @@ Use ``SMTP.sendmail`` to send raw messages. Allowed arguments are:
 
 Use ``SMTP.send_message`` to send ``email.message.Message`` objects.
 
+Using SMTP over SSL
+-------------------
+
+Simply use ``SMTP_SSL`` or use ``SMTP`` with ``ssl`` option set to ``True``.
+
 .. |travis| image:: https://travis-ci.org/cole/aiosmtplib.svg?branch=master
            :target: https://travis-ci.org/cole/aiosmtplib
            :alt: "aiosmtplib TravisCI build status"
