@@ -543,3 +543,10 @@ class SMTP:
             raise SMTPException("No suitable authentication method found.")
         else:
             raise SMTPAuthenticationError(code, message)
+
+    async def __aenter__(self):
+        await self.connect()
+        return self
+
+    async def __aexit__(self, *args):
+        await self.quit()

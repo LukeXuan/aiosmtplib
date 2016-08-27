@@ -63,6 +63,29 @@ Using SMTP over SSL
 
 Simply use ``SMTP_SSL`` or use ``SMTP`` with ``ssl`` option set to ``True``.
 
+Using asynchronous context manager
+----------------------------------
+
+Async context manager will ensure the connection is established before the block and it is quited after the block.
+
+.. code-block:: python
+
+    import asyncio
+    import aiosmtplib
+
+    loop = asyncio.get_event_loop()
+
+    async def send_a_message():
+        sender = 'root@localhost'
+        recipient = 'somebody@localhost'
+        message = "Hello World"
+        async with aiosmtplib.SMTP(hostname='localhost', port=1025, loop=loop) as smtp:
+            await smtp.sendmail(sender, [recipient], message)
+
+
+    loop.run_until_complete(send_a_message())
+
+
 .. |travis| image:: https://travis-ci.org/cole/aiosmtplib.svg?branch=master
            :target: https://travis-ci.org/cole/aiosmtplib
            :alt: "aiosmtplib TravisCI build status"
