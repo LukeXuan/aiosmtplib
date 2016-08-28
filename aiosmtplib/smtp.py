@@ -48,7 +48,7 @@ class SMTP:
                  source_address=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT,
                  loop=None, ssl=False):
         self.hostname = hostname
-        self.port = SMTP_SSL_PORT if ssl else SMTP_PORT
+        self.port = port or (SMTP_SSL_PORT if ssl else SMTP_PORT)
         self._source_address = source_address
         # TODO: implement timeout
         self.timeout = timeout
